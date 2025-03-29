@@ -67,11 +67,26 @@
             android:hint="한줄 소개"
             android:textColor="#FFFFFF"
             android:textColorHint="#AAAAAA" />
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="회원가입 완료"
-            android:backgroundTint="#5c6e56"
-            android:layout_marginTop="20dp"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:weightSum="2">
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="이전"
+                android:backgroundTint="#5c6e56"
+                android:layout_marginRight="8dp"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="회원가입 완료"
+                android:backgroundTint="#5c6e56"
+                android:layout_marginLeft="8dp"/>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
