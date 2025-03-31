@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.utils.`is`
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -6,6 +8,7 @@ plugins {
 android {
     namespace = "com.example.frontendproject"
     compileSdk = 35
+    viewBinding.isEnabled = true
 
     defaultConfig {
         applicationId = "com.example.frontendproject"
