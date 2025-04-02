@@ -10,7 +10,6 @@ class IntroActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val binding = ActivityIntroBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
 
     }
