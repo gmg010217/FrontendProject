@@ -5,7 +5,7 @@
         android:title ="홈" />
 
     <item
-        android:title="설정" />
+        android:title="회원 정보 수정" />
 
     <item
         android:title="일기장" />
