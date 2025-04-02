@@ -28,6 +28,7 @@
         android:orientation="vertical"
         android:layout_gravity="center_horizontal">
         <EditText
+            android:id="@+id/nicknameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="닉네임"
@@ -35,6 +36,7 @@
             android:textColorHint="#AAAAAA" />
 
         <EditText
+            android:id="@+id/ageEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="나이"
@@ -43,18 +45,21 @@
             android:inputType="number" />
 
         <RadioGroup
+            android:id="@+id/genderRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="10dp">
 
             <RadioButton
+                android:id="@+id/maleRadioBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="남성"
                 android:textColor="#AAAAAA"/>
 
             <RadioButton
+                android:id="@+id/femaleRadioBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="여성"
@@ -62,6 +67,7 @@
         </RadioGroup>
 
         <EditText
+            android:id="@+id/aboutMeEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="한줄 소개"
@@ -82,6 +88,7 @@
                 android:backgroundTint="#5c6e56"
                 android:layout_marginRight="8dp"/>
             <Button
+                android:id="@+id/joinFinishBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

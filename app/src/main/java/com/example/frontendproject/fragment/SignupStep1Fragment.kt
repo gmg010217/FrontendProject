@@ -22,6 +22,18 @@ class SignupStep1Fragment : Fragment() {
         val passwordEditText = view.findViewById<EditText>(R.id.passwordEditText)
         val confirmEditText = view.findViewById<EditText>(R.id.confirmPasswordEditText)
 
+        val emailIdEditText = view.findViewById<EditText>(R.id.eamilIdEditText)
+
+        val email = emailIdEditText.text.toString()
+        val password = passwordEditText.text.toString()
+
+        val signupStep2Fragment = SignupStep2Fragment().apply {
+            arguments = Bundle().apply {
+                putString("emailId", email)
+                putString("password", password)
+            }
+        }
+
         nextButton.setOnClickListener {
             val password = passwordEditText.text.toString()
             val confirm = confirmEditText.text.toString()
