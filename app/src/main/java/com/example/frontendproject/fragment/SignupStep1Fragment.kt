@@ -24,23 +24,21 @@ class SignupStep1Fragment : Fragment() {
 
         val emailIdEditText = view.findViewById<EditText>(R.id.eamilIdEditText)
 
-        val email = emailIdEditText.text.toString()
-        val password = passwordEditText.text.toString()
-
-        val signupStep2Fragment = SignupStep2Fragment().apply {
-            arguments = Bundle().apply {
-                putString("emailId", email)
-                putString("password", password)
-            }
-        }
-
         nextButton.setOnClickListener {
+            val email = emailIdEditText.text.toString()
             val password = passwordEditText.text.toString()
             val confirm = confirmEditText.text.toString()
 
             if (password == confirm && password.isNotBlank()) {
+                val signupStep2Fragment = SignupStep2Fragment().apply {
+                    arguments = Bundle().apply {
+                        putString("emailId", email)
+                        putString("password", password)
+                    }
+                }
+
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.joinFragmentContainer, SignupStep2Fragment())
+                    .replace(R.id.joinFragmentContainer, signupStep2Fragment)
                     .addToBackStack(null)
                     .commit()
             } else {
