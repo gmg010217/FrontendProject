@@ -33,6 +33,21 @@
 
         <activity android:name=".MainActivity"
             android:exported="true" />
+
+        <activity android:name=".ExerciseCalendarActivity"
+            android:exported="true" />
+
+        <activity android:name=".AiChatActivity"
+            android:exported="true" />
+
+        <activity android:name=".FreeBoardActivity"
+            android:exported="true" />
+
+        <activity android:name=".WorryBoardActivity"
+            android:exported="true" />
+
+        <activity android:name=".RankingBoardActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

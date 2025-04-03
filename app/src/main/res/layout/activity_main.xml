@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout 
+<androidx.drawerlayout.widget.DrawerLayout
+    android:id="@+id/mainDrawerLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -29,6 +30,7 @@
                 android:src="@drawable/main_upper" />
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/mainToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@android:color/transparent" >
@@ -40,7 +42,8 @@
                     android:text="Health Mind"
                     android:textColor="#FFFFFF"
                     android:textSize="28sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginRight="50dp"/>
             </androidx.appcompat.widget.Toolbar>
         </FrameLayout>
 
@@ -86,6 +89,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
+                        android:id="@+id/exerciseCalendarBtn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/run_calendar"
@@ -107,6 +111,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
+                        android:id="@+id/aiChatBtn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/ai_chat"
@@ -137,6 +142,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
+                        android:id="@+id/freeBoardBtn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/free_board"
@@ -158,6 +164,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
+                        android:id="@+id/worryBoardBtn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/worry_board"
@@ -179,6 +186,7 @@
                     android:layout_weight="1">
 
                     <ImageButton
+                        android:id="@+id/rankingBoardBtn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/rank_board"

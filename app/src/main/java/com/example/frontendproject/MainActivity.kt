@@ -1,9 +1,12 @@
 package com.example.frontendproject
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import com.example.frontendproject.databinding.ActivityMainBinding
 import com.example.frontendproject.model.MemberInfoResponse
 import com.example.frontendproject.network.ApiService
@@ -15,6 +18,7 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var api: ApiService
+    private lateinit var drawerToggle: ActionBarDrawerToggle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,11 +26,39 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.mainToolbar)
+
+        drawerToggle = ActionBarDrawerToggle(
+            this,
+            binding.mainDrawerLayout,
+            binding.mainToolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        )
+        binding.mainDrawerLayout.addDrawerListener(drawerToggle)
+        drawerToggle.syncState()
+
         api = RetrofitClient.retrofit.create(ApiService::class.java)
 
         val memberId = getSharedPreferences("user_prefs", MODE_PRIVATE).getLong("memberId", -1)
         if (memberId != null) {
             fetchUserInfo(memberId)
+        }
+
+        binding.exerciseCalendarBtn.setOnClickListener {
+            startActivity(Intent(this, ExerciseCalendarActivity::class.java))
+        }
+        binding.aiChatBtn.setOnClickListener {
+            startActivity(Intent(this, AiChatActivity::class.java))
+        }
+        binding.freeBoardBtn.setOnClickListener {
+            startActivity(Intent(this, FreeBoardActivity::class.java))
+        }
+        binding.worryBoardBtn.setOnClickListener {
+            startActivity(Intent(this, WorryBoardActivity::class.java))
+        }
+        binding.rankingBoardBtn.setOnClickListener {
+            startActivity(Intent(this, RankingBoardActivity::class.java))
         }
     }
 
@@ -54,5 +86,13 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "서버 통신 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    override fun onBackPressed() {
+        if (binding.mainDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.mainDrawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 }
