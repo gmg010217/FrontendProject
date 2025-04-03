@@ -9,9 +9,9 @@ import retrofit2.http.POST
 
 interface ApiService {
 
-    @POST("/healthmind/member/signup")
+    @POST("member/signup")
     fun signUp(@Body request: SignUpRequest): Call<String>
 
-    @POST("/healthmind/member/login")
+    @POST("member/login")
     fun login(@Body request: LoginRequest): Call<LoginResponse>
 }

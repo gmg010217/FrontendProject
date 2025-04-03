@@ -9,4 +9,7 @@
 
     <item
         android:title="일기장" />
+
+    <item
+        android:title="로그아웃" />
 </menu>

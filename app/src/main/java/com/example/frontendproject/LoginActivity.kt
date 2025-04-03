@@ -38,6 +38,13 @@ class LoginActivity : AppCompatActivity()  {
                     response: Response<LoginResponse>
                 ) {
                     if (response.isSuccessful) {
+                        val memberId = response.body()?.id ?: -1L
+
+                        getSharedPreferences("user_prefs", MODE_PRIVATE)
+                            .edit()
+                            .putLong("memberId", memberId)
+                            .apply()
+
                         Toast.makeText(this@LoginActivity, "로그인 성공!", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)
