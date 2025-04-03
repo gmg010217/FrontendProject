@@ -19,6 +19,7 @@
         android:layout_marginBottom="80dp"/>
 
     <TextView
+        android:id="@+id/navNickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="닉네임"
@@ -26,6 +27,7 @@
         android:textSize="20sp" />
 
     <TextView
+        android:id="@+id/navEmailId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="youremail@example.com"
