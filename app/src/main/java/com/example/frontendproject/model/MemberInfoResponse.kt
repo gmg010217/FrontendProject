@@ -1,6 +1,6 @@
 package com.example.frontendproject.model
 
 data class MemberInfoResponse(
-    val nickname: String,
+    val nickName: String,
     val emailId: String
 )

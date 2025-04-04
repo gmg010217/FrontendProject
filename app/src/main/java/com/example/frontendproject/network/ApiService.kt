@@ -3,6 +3,7 @@ package com.example.frontendproject.network
 import com.example.frontendproject.model.LoginRequest
 import com.example.frontendproject.model.LoginResponse
 import com.example.frontendproject.model.MemberInfoResponse
+import com.example.frontendproject.model.MemberUpdate
 import com.example.frontendproject.model.SignUpRequest
 import retrofit2.Call
 import retrofit2.http.Body
@@ -23,4 +24,10 @@ interface ApiService {
 
     @GET("member/logout")
     fun logout(): Call<String>
+
+    @GET("member/edit/{id}")
+    fun getMemberInfo(@Path("id") memberId: Long): Call<MemberUpdate>
+
+    @POST("member/edit/{id}")
+    fun updateMember(@Path("id") memberId: Long, @Body request: MemberUpdate): Call<String>
 }

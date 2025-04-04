@@ -67,8 +67,13 @@ class MainActivity : AppCompatActivity() {
                     logout()
                     true
                 }
+                R.id.navEditMember -> {
+                    val intent = Intent(this@MainActivity, EditMemberActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
                 else -> {
-                    false
+                    true
                 }
             }
         }
@@ -87,7 +92,7 @@ class MainActivity : AppCompatActivity() {
                     val nicknameTextView = headerView.findViewById<TextView>(R.id.navNickname)
                     val emailTextView = headerView.findViewById<TextView>(R.id.navEmailId)
 
-                    nicknameTextView.text = userInfo?.nickname ?: "알 수 없음"
+                    nicknameTextView.text = userInfo?.nickName ?: "알 수 없음"
                     emailTextView.text = userInfo?.emailId ?: "이메일 없음"
                 } else {
                     Toast.makeText(this@MainActivity, "회원 정보를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show()

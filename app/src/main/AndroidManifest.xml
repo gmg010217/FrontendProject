@@ -48,6 +48,9 @@
 
         <activity android:name=".RankingBoardActivity"
             android:exported="true" />
+
+        <activity android:name=".EditMemberActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
