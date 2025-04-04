@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item
         android:title ="홈" />
 
     <item
-        android:title="회원 정보 수정" />
+        android:title="회원 정보 수정"/>
 
     <item
         android:title="일기장" />
 
     <item
+        android:id="@+id/navLogout"
         android:title="로그아웃" />
 </menu>

@@ -60,6 +60,18 @@ class MainActivity : AppCompatActivity() {
         binding.rankingBoardBtn.setOnClickListener {
             startActivity(Intent(this, RankingBoardActivity::class.java))
         }
+
+        binding.navView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.navLogout -> {
+                    logout()
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
     }
 
     private fun fetchUserInfo(memberId: Long) {
@@ -94,5 +106,28 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    private fun logout() {
+        api.logout().enqueue(object: Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    getSharedPreferences("user_prefs", MODE_PRIVATE)
+                        .edit()
+                        .clear()
+                        .apply()
+
+                    val intent = Intent(this@MainActivity, IntroActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this@MainActivity, "로그아웃 실패", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(this@MainActivity, "서버 연결 실패", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

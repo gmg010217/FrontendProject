@@ -20,4 +20,7 @@ interface ApiService {
 
     @GET("member/info/{id}")
     fun memberInfo(@Path("id") id: Long): Call <MemberInfoResponse>
+
+    @GET("member/logout")
+    fun logout(): Call<String>
 }
