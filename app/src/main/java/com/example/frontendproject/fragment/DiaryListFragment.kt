@@ -36,7 +36,18 @@ class DiaryListFragment: Fragment() {
             override fun onResponse(call: Call<List<Diary>>, response: Response<List<Diary>>) {
                 if (response.isSuccessful) {
                     val diaryList = response.body() ?: emptyList()
-                    recyclerView.adapter = DiaryAdapter(diaryList)
+                    recyclerView.adapter = DiaryAdapter(diaryList) { selectedDiary ->
+                        val detailFragment = DiaryDetailFragment().apply {
+                            arguments = Bundle().apply {
+                                putLong("diaryId", selectedDiary.id)
+                            }
+                        }
+
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.diaryFragmentContainer, detailFragment)
+                            .addToBackStack(null)
+                            .commit()
+                    }
                 }
             }
 

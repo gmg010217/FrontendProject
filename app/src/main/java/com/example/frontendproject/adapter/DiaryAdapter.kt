@@ -8,7 +8,9 @@ import com.example.frontendproject.model.Diary
 
 class DiaryViewHolder(val binding: ItemDiaryBinding): RecyclerView.ViewHolder(binding.root)
 
-class DiaryAdapter(val diaryList: List<Diary>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class DiaryAdapter(
+    val diaryList: List<Diary>,
+    val onItemClick: (Diary) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemCount(): Int = diaryList.size
 
@@ -17,10 +19,13 @@ class DiaryAdapter(val diaryList: List<Diary>) : RecyclerView.Adapter<RecyclerVi
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val binding = (holder as DiaryViewHolder).binding
+        val diary = diaryList[position]
 
         binding.diaryTitleText.text = diaryList[position].title
         binding.diarydateText.text = diaryList[position].diaryDate
 
-
+        binding.root.setOnClickListener {
+            onItemClick(diary)
+        }
     }
 }

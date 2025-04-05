@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:text="Health Mind"
         android:textColor="#FFFFFF"
-        android:textSize="28sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="80dp"/>

@@ -8,8 +8,10 @@ import com.example.frontendproject.model.MemberUpdate
 import com.example.frontendproject.model.SignUpRequest
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface ApiService {
@@ -34,4 +36,13 @@ interface ApiService {
 
     @GET("diary/{id}")
     fun getDiaryList(@Path("id") memberId: Long): Call<List<Diary>>
+
+    @GET("diary/{id}/{diaryid}")
+    fun getDiaryDetail(@Path("id") id: Long, @Path("diaryid") diaryId: Long): Call<Diary>
+
+    @PUT("diary/{id}/{diaryid}")
+    fun updateDiary(@Path("id") id: Long, @Path("diaryid") diaryId: Long, @Body request: Diary): Call<String>
+
+    @DELETE("diary/{id}/{diaryid}")
+    fun deleteDiary(@Path("id") id: Long, @Path("diaryid") diaryId: Long): Call<String>
 }
