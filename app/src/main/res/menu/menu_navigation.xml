@@ -8,6 +8,7 @@
         android:title="회원 정보 수정"/>
 
     <item
+        android:id="@+id/navDiary"
         android:title="일기장" />
 
     <item

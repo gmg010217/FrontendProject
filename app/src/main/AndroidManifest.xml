@@ -51,6 +51,9 @@
 
         <activity android:name=".EditMemberActivity"
             android:exported="true" />
+
+        <activity android:name=".DiaryActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

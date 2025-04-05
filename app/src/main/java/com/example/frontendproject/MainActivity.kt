@@ -72,6 +72,11 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+                R.id.navDiary -> {
+                    val intent = Intent(this@MainActivity, DiaryActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
                 else -> {
                     true
                 }

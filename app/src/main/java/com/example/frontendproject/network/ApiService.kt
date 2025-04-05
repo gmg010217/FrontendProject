@@ -1,5 +1,6 @@
 package com.example.frontendproject.network
 
+import com.example.frontendproject.model.Diary
 import com.example.frontendproject.model.LoginRequest
 import com.example.frontendproject.model.LoginResponse
 import com.example.frontendproject.model.MemberInfoResponse
@@ -30,4 +31,7 @@ interface ApiService {
 
     @POST("member/edit/{id}")
     fun updateMember(@Path("id") memberId: Long, @Body request: MemberUpdate): Call<String>
+
+    @GET("diary/{id}")
+    fun getDiaryList(@Path("id") memberId: Long): Call<List<Diary>>
 }
