@@ -45,4 +45,10 @@ interface ApiService {
 
     @DELETE("diary/{id}/{diaryid}")
     fun deleteDiary(@Path("id") id: Long, @Path("diaryid") diaryId: Long): Call<String>
+
+    @POST("diary/{id}")
+    fun addDiary(@Path("id") id: Long, @Body request: Diary): Call<String>
+
+    @DELETE("member/{id}")
+    fun deleteMember(@Path("id") id: Long): Call<String>
 }

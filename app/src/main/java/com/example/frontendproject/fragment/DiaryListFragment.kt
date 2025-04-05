@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.fragment.app.Fragment
@@ -29,6 +30,20 @@ class DiaryListFragment: Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_diary_list, container, false)
         recyclerView = view.findViewById(R.id.diaryRecyclerView)
+
+        val writeBtn = view.findViewById<Button>(R.id.diaryWriteBtn)
+        writeBtn.setOnClickListener {
+            val writeFragment = DiaryDetailFragment().apply {
+                arguments = Bundle().apply {
+                    putLong("diaryId", -1L)
+                }
+            }
+
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.diaryFragmentContainer, writeFragment)
+                .addToBackStack(null)
+                .commit()
+        }
 
         val api = RetrofitClient.retrofit.create(ApiService::class.java)
         val memberId = requireContext().getSharedPreferences("user_prefs", MODE_PRIVATE).getLong("memberId", -1)

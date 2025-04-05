@@ -77,6 +77,28 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+                R.id.navHome -> {
+                    binding.mainDrawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
+                R.id.navDeleteMember -> {
+                    api.deleteMember(memberId).enqueue(object: Callback<String> {
+                        override fun onResponse(call: Call<String>, response: Response<String>) {
+                            if (response.isSuccessful) {
+                                val intent = Intent(this@MainActivity, IntroActivity::class.java)
+                                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(this@MainActivity, "회원 탈퇴에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        override fun onFailure(call: Call<String>, t: Throwable) {
+                            Toast.makeText(this@MainActivity, "서버 연결 실패", Toast.LENGTH_SHORT).show()
+                        }
+                    })
+                    true
+                }
                 else -> {
                     true
                 }

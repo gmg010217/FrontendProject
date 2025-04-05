@@ -2,6 +2,7 @@ package com.example.frontendproject.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ class DiaryDetailFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_diary_detail, container, false)
         val memberId = requireContext().getSharedPreferences("user_prefs", MODE_PRIVATE).getLong("memberId", -1)
         val diaryId = arguments?.getLong("diaryId") ?: -1L
+        val isWriteMode = (diaryId == -1L)
 
         val titleEditText = view.findViewById<EditText>(R.id.diaryDetailTitle)
         val contentEditText = view.findViewById<EditText>(R.id.diaryDetailContent)
@@ -35,19 +37,24 @@ class DiaryDetailFragment : Fragment() {
         val deleteBtn = view.findViewById<Button>(R.id.diaryDetailDeleteBtn)
 
         val api = RetrofitClient.retrofit.create(ApiService::class.java)
-        api.getDiaryDetail(memberId, diaryId).enqueue(object: Callback<Diary> {
-            override fun onResponse(call: Call<Diary>, response: Response<Diary>) {
-                if (response.isSuccessful) {
-                    val diary = response.body()
-                    view.findViewById<EditText>(R.id.diaryDetailTitle).setText(diary?.title ?: "")
-                    view.findViewById<EditText>(R.id.diaryDetailContent).setText(diary?.content ?: "")
-                }
-            }
 
-            override fun onFailure(call: Call<Diary>, t: Throwable) {
-                Toast.makeText(requireContext(), "일기 불러오기 실패", Toast.LENGTH_SHORT).show()
-            }
-        })
+        if (!isWriteMode) {
+            api.getDiaryDetail(memberId, diaryId).enqueue(object: Callback<Diary> {
+                override fun onResponse(call: Call<Diary>, response: Response<Diary>) {
+                    if (response.isSuccessful) {
+                        val diary = response.body()
+                        view.findViewById<EditText>(R.id.diaryDetailTitle).setText(diary?.title ?: "")
+                        view.findViewById<EditText>(R.id.diaryDetailContent).setText(diary?.content ?: "")
+                    }
+                }
+
+                override fun onFailure(call: Call<Diary>, t: Throwable) {
+                    Toast.makeText(requireContext(), "일기 불러오기 실패", Toast.LENGTH_SHORT).show()
+                }
+            })
+        } else {
+            deleteBtn.visibility = View.GONE
+        }
 
         saveBtn.setOnClickListener {
             val updateDiary = Diary(
@@ -57,20 +64,44 @@ class DiaryDetailFragment : Fragment() {
                 diaryDate = ""
             )
 
-            api.updateDiary(memberId, diaryId, updateDiary).enqueue(object: Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(requireContext(), "일기 저장 완료", Toast.LENGTH_SHORT).show()
-                        moveToMain()
-                    } else {
-                        Toast.makeText(requireContext(), "저장 실패", Toast.LENGTH_SHORT).show()
+            if (!isWriteMode) {
+                api.updateDiary(memberId, diaryId, updateDiary).enqueue(object: Callback<String> {
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(requireContext(), "일기 저장 완료", Toast.LENGTH_SHORT).show()
+                            moveToMain()
+                        } else {
+                            Toast.makeText(requireContext(), "저장 실패", Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    Toast.makeText(requireContext(), "서버 오류", Toast.LENGTH_SHORT)
-                }
-            })
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        Toast.makeText(requireContext(), "서버 오류", Toast.LENGTH_SHORT)
+                    }
+                })
+            } else {
+                val addDiary = Diary(
+                    id = diaryId,
+                    title = titleEditText.text.toString(),
+                    content = contentEditText.text.toString(),
+                    diaryDate = ""
+                )
+
+                api.addDiary(memberId, addDiary).enqueue(object: Callback<String> {
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(requireContext(), "일기 저장 완료", Toast.LENGTH_SHORT).show()
+                            moveToMain()
+                        } else {
+                            Toast.makeText(requireContext(), "저장 실패", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        Toast.makeText(requireContext(), "서버 오류", Toast.LENGTH_SHORT)
+                    }
+                })
+            }
         }
 
         deleteBtn.setOnClickListener {

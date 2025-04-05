@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/navHome"
         android:title ="홈" />
 
     <item
@@ -14,4 +15,8 @@
     <item
         android:id="@+id/navLogout"
         android:title="로그아웃" />
+
+    <item
+        android:id="@+id/navDeleteMember"
+        android:title="회원탈퇴" />
 </menu>
