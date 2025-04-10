@@ -1,10 +1,12 @@
 package com.example.frontendproject.network
 
 import com.example.frontendproject.model.Diary
+import com.example.frontendproject.model.Exercise
 import com.example.frontendproject.model.LoginRequest
 import com.example.frontendproject.model.LoginResponse
 import com.example.frontendproject.model.MemberInfoResponse
 import com.example.frontendproject.model.MemberUpdate
+import com.example.frontendproject.model.Quote
 import com.example.frontendproject.model.SignUpRequest
 import retrofit2.Call
 import retrofit2.http.Body
@@ -51,4 +53,17 @@ interface ApiService {
 
     @DELETE("member/{id}")
     fun deleteMember(@Path("id") id: Long): Call<String>
+
+    @GET("exercise/{dayid}")
+    fun getQuote(@Path("dayid") id: Long): Call<Quote>
+
+    @GET("exercise/{id}/{date}")
+    fun getExercise(@Path("id") memberId: Long, @Path("date") date: String): Call<Exercise>
+
+    @POST("exercise/{id}")
+    fun addExercise(@Path("id") memberId: Long, @Body exercise: Exercise): Call<String>
+
+    @POST("exericse/{id}/{date}")
+    fun editExercises(@Path("id") memberId: Long, @Path("date") date: String, @Body exercise: Exercise): Call<String>
+
 }

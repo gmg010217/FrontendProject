@@ -8,6 +8,7 @@
     android:background="#c9d8b7">
 
     <TextView
+        android:id="@+id/exerciseDetailDayTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2025년 3월 1일"
@@ -17,12 +18,14 @@
         android:layout_marginTop="20dp"/>
 
     <EditText
+        android:id="@+id/exerciseDetailTitleEditView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="제목"
         android:padding="10dp" />
 
     <EditText
+        android:id="@+id/exerciseDetailContentEditView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="운동 내용 입력"
@@ -30,6 +33,7 @@
         android:lines="10"/>
 
     <Button
+        android:id="@+id/exerciseDetailSaveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="저장"

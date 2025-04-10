@@ -3,8 +3,7 @@ package com.example.frontendproject
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.frontendproject.databinding.ActivityExerciseDetailBinding
-import com.example.frontendproject.databinding.ActivityIntroBinding
+ import com.example.frontendproject.databinding.ActivityIntroBinding
 
 class IntroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
