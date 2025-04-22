@@ -66,7 +66,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="#f8f5fa"
-            android:weightSum="2" >
+            android:weightSum="2">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -78,14 +78,17 @@
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@drawable/main_background">
 
                     <ImageButton
                         android:id="@+id/exerciseCalendarBtn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/run_calendar"
-                        android:scaleType="centerCrop" />
+                        android:src="@drawable/run_people"
+                        android:scaleType="fitCenter"
+                        android:background="@android:color/transparent"
+                        android:layout_marginBottom="10dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -93,21 +96,22 @@
                         android:text="운동기록 캘린더"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="5dp"/>
+                        android:layout_gravity="bottom|center_horizontal" />
                 </FrameLayout>
 
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@drawable/main_background">
 
                     <ImageButton
                         android:id="@+id/aiChatBtn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/ai_chat"
-                        android:scaleType="centerCrop" />
+                        android:scaleType="fitCenter"
+                        android:background="@android:color/transparent"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -115,8 +119,7 @@
                         android:text="AI 건강정보/고민상담"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="5dp"/>
+                        android:layout_gravity="bottom|center_horizontal" />
                 </FrameLayout>
 
             </LinearLayout>
@@ -126,19 +129,23 @@
                 android:layout_height="0dp"
                 android:orientation="horizontal"
                 android:layout_weight="1"
-                android:weightSum="3">
+                android:weightSum="3"
+                android:fitsSystemWindows="true">
 
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@drawable/main_background">
 
                     <ImageButton
                         android:id="@+id/freeBoardBtn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/free_board"
-                        android:scaleType="centerCrop" />
+                        android:scaleType="fitCenter"
+                        android:background="@android:color/transparent"
+                        android:layout_marginBottom="10dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -146,21 +153,22 @@
                         android:text="자유 게시판"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="5dp"/>
+                        android:layout_gravity="bottom|center_horizontal" />
                 </FrameLayout>
 
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@drawable/main_background">
 
                     <ImageButton
                         android:id="@+id/worryBoardBtn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:src="@drawable/worry_board"
-                        android:scaleType="centerCrop" />
+                        android:scaleType="fitCenter"
+                        android:background="@android:color/transparent"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -168,21 +176,22 @@
                         android:text="상담 게시판"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="5dp"/>
+                        android:layout_gravity="bottom|center_horizontal" />
                 </FrameLayout>
 
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:background="@drawable/main_background">
 
                     <ImageButton
                         android:id="@+id/rankingBoardBtn"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
                         android:src="@drawable/rank_board"
-                        android:scaleType="centerCrop" />
+                        android:background="@android:color/transparent"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -190,8 +199,7 @@
                         android:text="랭킹 게시판"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="5dp"/>
+                        android:layout_gravity="bottom|center_horizontal" />
                 </FrameLayout>
             </LinearLayout>
         </LinearLayout>
