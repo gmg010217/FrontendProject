@@ -2,6 +2,7 @@ package com.example.frontendproject.network
 
 import com.example.frontendproject.model.Diary
 import com.example.frontendproject.model.Exercise
+import com.example.frontendproject.model.FreeboardsResponse
 import com.example.frontendproject.model.LoginRequest
 import com.example.frontendproject.model.LoginResponse
 import com.example.frontendproject.model.MemberInfoResponse
@@ -66,4 +67,6 @@ interface ApiService {
     @POST("exericse/{id}/{date}")
     fun editExercises(@Path("id") memberId: Long, @Path("date") date: String, @Body exercise: Exercise): Call<String>
 
+    @GET("freeboard/")
+    fun getFreeBoardList() : Call<List<FreeboardsResponse>>
 }
