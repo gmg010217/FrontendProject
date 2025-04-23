@@ -24,6 +24,8 @@ import retrofit2.Response
 
 class FreeBoardListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: FreeBoardAdapter
+    private var fullList: List<FreeboardsResponse> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +54,17 @@ class FreeBoardListFragment : Fragment() {
                 .commit()
         }
 
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.addItemDecoration(
+            DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL)
+        )
+
+        loadData()
+
+        return view
+    }
+
+    private fun loadData() {
         val api = RetrofitClient.retrofit.create(ApiService::class.java)
         api.getFreeBoardList().enqueue(object : Callback<List<FreeboardsResponse>> {
             override fun onResponse(
@@ -59,8 +72,8 @@ class FreeBoardListFragment : Fragment() {
                 response: Response<List<FreeboardsResponse>>
             ) {
                 if (response.isSuccessful) {
-                    val freeBoardList = response.body() ?: emptyList()
-                    recyclerView.adapter = FreeBoardAdapter(freeBoardList) { selectedFreeBoard ->
+                    fullList = response.body() ?: emptyList()
+                    adapter = FreeBoardAdapter(fullList) { selectedFreeBoard ->
                         val detailFragment = FreeBoardDetailFragment().apply {
                             arguments = Bundle().apply {
                                 putLong("freeBoardId", selectedFreeBoard.id)
@@ -72,6 +85,7 @@ class FreeBoardListFragment : Fragment() {
                             .addToBackStack(null)
                             .commit()
                     }
+                    recyclerView.adapter = adapter
                 }
             }
 
@@ -79,11 +93,6 @@ class FreeBoardListFragment : Fragment() {
                 Toast.makeText(requireContext(), "서버 연결 실패", Toast.LENGTH_SHORT).show()
             }
         })
-
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.addItemDecoration(DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL))
-
-        return view
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -96,11 +105,48 @@ class FreeBoardListFragment : Fragment() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+                val keyword = query.orEmpty().trim()
+                if (keyword.isNotEmpty()) {
+                    searchFromServer(keyword)
+                } else {
+                    loadData() // 검색어 없으면 전체 목록 로드
+                }
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
+            }
+        })
+    }
+
+    private fun searchFromServer(title: String) {
+        val api = RetrofitClient.retrofit.create(ApiService::class.java)
+        api.searchFreeBoardList(title).enqueue(object : Callback<List<FreeboardsResponse>> {
+            override fun onResponse(
+                call: Call<List<FreeboardsResponse>>,
+                response: Response<List<FreeboardsResponse>>
+            ) {
+                if (response.isSuccessful) {
+                    val result = response.body() ?: emptyList()
+                    adapter = FreeBoardAdapter(result) { selectedFreeBoard ->
+                        val detailFragment = FreeBoardDetailFragment().apply {
+                            arguments = Bundle().apply {
+                                putLong("freeBoardId", selectedFreeBoard.id)
+                            }
+                        }
+
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.freeBoardFragmentContainer, detailFragment)
+                            .addToBackStack(null)
+                            .commit()
+                    }
+                    recyclerView.adapter = adapter
+                }
+            }
+
+            override fun onFailure(call: Call<List<FreeboardsResponse>>, t: Throwable) {
+                Toast.makeText(requireContext(), "서버 오류", Toast.LENGTH_SHORT).show()
             }
         })
     }

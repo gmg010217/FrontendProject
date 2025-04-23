@@ -17,6 +17,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -73,4 +74,7 @@ interface ApiService {
 
     @POST("freeboard/{id}")
     fun addFreeBoard(@Path("id") memberId: Long, @Body freeBoardAddRequest: FreeBoardAddRequest): Call<String>
+
+    @GET("freeboard/search")
+    fun searchFreeBoardList(@Query("title") title: String): Call<List<FreeboardsResponse>>
 }
