@@ -10,15 +10,8 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/freeBoardToolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize" >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="자유 게시판"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold"/>
+        android:layout_height="?attr/actionBarSize"
+        android:textColor="@android:color/white" >
     </androidx.appcompat.widget.Toolbar>
 
     <View

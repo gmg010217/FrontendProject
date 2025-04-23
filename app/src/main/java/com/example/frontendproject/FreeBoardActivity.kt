@@ -12,6 +12,9 @@ class FreeBoardActivity : AppCompatActivity() {
         val binding = ActivityFreeBoardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.freeBoardToolbar)
+        supportActionBar?.title = "자유 게시판"
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.freeBoardFragmentContainer, FreeBoardListFragment())
             .commit()
