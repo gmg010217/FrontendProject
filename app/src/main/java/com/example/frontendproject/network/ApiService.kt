@@ -87,4 +87,7 @@ interface ApiService {
 
     @POST("freeboard/edit/{id}/{boardid}")
     fun editFreeBoard(@Path("id") memberId: Long, @Path("boardid") boardId: Long, @Body freeBoardAddRequest : FreeBoardAddRequest): Call<String>
+
+    @DELETE("freeboard/{id}/{boardid}")
+    fun deleteFreeBoard(@Path("id") memberId: Long, @Path("boardid") boardId: Long): Call<String>
 }

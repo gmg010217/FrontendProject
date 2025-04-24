@@ -73,6 +73,9 @@ class FreeBoardDetailFragment : Fragment() {
 
                         titleEditText.isEnabled = true
                         contentEditText.isEnabled = true
+                    } else {
+                        Toast.makeText(requireContext(), "작성자만 수정할 수 있습니다.", Toast.LENGTH_SHORT).show()
+                        moveToMain()
                     }
                 }
 
@@ -132,8 +135,6 @@ class FreeBoardDetailFragment : Fragment() {
     private fun freeBoardDetail(view: View, memberId: Long, freeBoardId: Long) {
         val titleView = view.findViewById<EditText>(R.id.freeBoardDetailTitle)
         val contentView = view.findViewById<EditText>(R.id.freeBoardDetailContent)
-        val commentInput = view.findViewById<EditText>(R.id.freeBoardCommentContent)
-        val saveBtn = view.findViewById<Button>(R.id.freeBoardDetailSaveBtn)
         val commentRecyclerView = view.findViewById<RecyclerView>(R.id.freeBoardCommentRecyclerView)
         val writerNameTextView = view.findViewById<TextView>(R.id.freeBoardDetailWriter)
 
@@ -167,9 +168,32 @@ class FreeBoardDetailFragment : Fragment() {
                     moveToEdit(memberId, freeBoardId)
                     true
                 }
+                R.id.freeBoardDelete -> {
+                    freeBoardDelete(memberId, freeBoardId)
+                    true
+                }
+
                 else -> false
             }
         }
+    }
+
+    private fun freeBoardDelete(memberId: Long, freeBoardId: Long) {
+        api.deleteFreeBoard(memberId, freeBoardId).enqueue(object: Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                if (response.isSuccessful) {
+                    Toast.makeText(requireContext(), "삭제가 완료되었습니다", Toast.LENGTH_SHORT).show()
+                    moveToMain()
+                } else {
+                    Toast.makeText(requireContext(), "작성자만 삭제할 수 있습니다", Toast.LENGTH_SHORT).show()
+                    moveToMain()
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(requireContext(), "서버 오류", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun moveToEdit(memberId: Long, freeBoardId: Long) {
@@ -178,7 +202,7 @@ class FreeBoardDetailFragment : Fragment() {
             putBoolean("isEditMode", true)
         }
 
-        val editFragment = FreeBoardDetailFragment() // 혹은 FreeBoardAddFragment()로 수정
+        val editFragment = FreeBoardDetailFragment()
         editFragment.arguments = bundle
 
         parentFragmentManager.beginTransaction()
