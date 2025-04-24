@@ -3,6 +3,7 @@ package com.example.frontendproject.network
 import com.example.frontendproject.model.Diary
 import com.example.frontendproject.model.Exercise
 import com.example.frontendproject.model.FreeBoardAddRequest
+import com.example.frontendproject.model.FreeBoardResponse
 import com.example.frontendproject.model.FreeboardsResponse
 import com.example.frontendproject.model.LoginRequest
 import com.example.frontendproject.model.LoginResponse
@@ -77,4 +78,7 @@ interface ApiService {
 
     @GET("freeboard/search")
     fun searchFreeBoardList(@Query("title") title: String): Call<List<FreeboardsResponse>>
+
+    @GET("freeboard/{id}/{boardid}")
+    fun getFreeboard(@Path("id") memberId: Long, @Path("boardid") boardId: Long): Call<FreeBoardResponse>
 }

@@ -8,11 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.frontendproject.MainActivity
 import com.example.frontendproject.R
+import com.example.frontendproject.adapter.CommentAdapter
 import com.example.frontendproject.model.FreeBoardAddRequest
+import com.example.frontendproject.model.FreeBoardResponse
 import com.example.frontendproject.network.ApiService
 import com.example.frontendproject.network.RetrofitClient
 import retrofit2.Call
@@ -27,6 +33,8 @@ class FreeBoardDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (requireActivity() as AppCompatActivity).supportActionBar?.hide()
+
         val memberId = requireContext().getSharedPreferences("user_prefs", MODE_PRIVATE).getLong("memberId", -1)
         val freeBoardId = arguments?.getLong("freeBoardId") ?: -1L
 
@@ -37,7 +45,7 @@ class FreeBoardDetailFragment : Fragment() {
             freeBoardAdd(view, memberId)
         } else {
             view = inflater.inflate(R.layout.fragment_free_board_detail, container, false)
-            freeBoardDetail(view, memberId)
+            freeBoardDetail(view, memberId, freeBoardId)
         }
 
         return view
@@ -71,13 +79,46 @@ class FreeBoardDetailFragment : Fragment() {
         }
     }
 
-    private fun freeBoardDetail(view: View, memberId: Long) {
+    private fun freeBoardDetail(view: View, memberId: Long, freeBoardId: Long) {
+        val titleView = view.findViewById<EditText>(R.id.freeBoardDetailTitle)
+        val contentView = view.findViewById<EditText>(R.id.freeBoardDetailContent)
+        val commentInput = view.findViewById<EditText>(R.id.freeBoardCommentContent)
+        val saveBtn = view.findViewById<Button>(R.id.freeBoardDetailSaveBtn)
+        val commentRecyclerView = view.findViewById<RecyclerView>(R.id.freeBoardCommentRecyclerView)
+        val writerNameTextView = view.findViewById<TextView>(R.id.freeBoardDetailWriter)
 
+        val commentAdapter = CommentAdapter(emptyList()) { }
+        commentRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        commentRecyclerView.adapter = commentAdapter
+
+        api.getFreeboard(memberId, freeBoardId).enqueue(object: Callback<FreeBoardResponse> {
+            override fun onResponse(
+                call: Call<FreeBoardResponse>,
+                response: Response<FreeBoardResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val detail = response.body()
+                    titleView.setText(detail?.title ?: "")
+                    contentView.setText(detail?.content ?: "")
+                    writerNameTextView.text = "작성자명 : ${detail?.writerName ?: ""}"
+                    commentAdapter.updateComments(detail?.comments ?: emptyList())
+                }
+            }
+
+            override fun onFailure(call: Call<FreeBoardResponse>, t: Throwable) {
+                Toast.makeText(requireContext(), "서버 오류", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun moveToMain() {
         val intent = Intent(requireContext(), MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        (requireActivity() as AppCompatActivity).supportActionBar?.show()
     }
 }

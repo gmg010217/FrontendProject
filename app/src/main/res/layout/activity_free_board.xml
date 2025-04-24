@@ -15,6 +15,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <View
+        android:id="@+id/freeBoardToolbarDivider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#000000" />
