@@ -3,6 +3,7 @@ package com.example.frontendproject.network
 import com.example.frontendproject.model.Diary
 import com.example.frontendproject.model.Exercise
 import com.example.frontendproject.model.FreeBoardAddRequest
+import com.example.frontendproject.model.FreeBoardCommentAddRequest
 import com.example.frontendproject.model.FreeBoardResponse
 import com.example.frontendproject.model.FreeboardsResponse
 import com.example.frontendproject.model.LoginRequest
@@ -93,4 +94,7 @@ interface ApiService {
 
     @DELETE("freeboard/comment/{id}/{commentid}")
     fun deleteFreeBoardCommnet(@Path("id") memberId: Long, @Path("commentid") commentId: Long): Call<String>
+
+    @POST("freeboard/comment/{id}/{boardid}")
+    fun addFreeBoardComment(@Path("id") memberId: Long, @Path("boardid") boardId: Long, @Body freeBoardCommentAddRequest: FreeBoardCommentAddRequest): Call<String>
 }

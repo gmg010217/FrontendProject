@@ -18,6 +18,7 @@ import com.example.frontendproject.MainActivity
 import com.example.frontendproject.R
 import com.example.frontendproject.adapter.CommentAdapter
 import com.example.frontendproject.model.FreeBoardAddRequest
+import com.example.frontendproject.model.FreeBoardCommentAddRequest
 import com.example.frontendproject.model.FreeBoardResponse
 import com.example.frontendproject.network.ApiService
 import com.example.frontendproject.network.RetrofitClient
@@ -172,12 +173,31 @@ class FreeBoardDetailFragment : Fragment() {
                     freeBoardDelete(memberId, freeBoardId)
                     true
                 }
-
                 else -> false
             }
         }
 
+        val registerBtn = view.findViewById<Button>(R.id.freeBoardDetailSaveBtn)
 
+        registerBtn.setOnClickListener {
+            val commentContent = view.findViewById<EditText>(R.id.freeBoardDetailCommentContent).text.toString()
+
+            val data = FreeBoardCommentAddRequest(comment = commentContent)
+            api.addFreeBoardComment(memberId, freeBoardId, data).enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(requireContext(), "댓글 작성에 성공하였습니다", Toast.LENGTH_SHORT).show()
+                        moveToMain()
+                    } else {
+                        Toast.makeText(requireContext(), "댓글 작성에 실패하였습니다", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    Toast.makeText(requireContext(), "서버 오류", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
     }
 
     private fun freeBoardDelete(memberId: Long, freeBoardId: Long) {
