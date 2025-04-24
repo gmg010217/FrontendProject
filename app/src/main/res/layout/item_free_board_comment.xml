@@ -8,13 +8,31 @@
     android:layout_marginBottom="8dp"
     android:elevation="1dp">
 
-    <TextView
-        android:id="@+id/freeBoardCommentWriter"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="작성자"
-        android:textStyle="bold"
-        android:textSize="14sp" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical" >
+
+        <TextView
+            android:id="@+id/freeBoardCommentWriter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="작성자"
+            android:textStyle="bold"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/freeBoardDeleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="삭제"
+            android:textSize="8sp"
+            android:backgroundTint="#5c6e56"
+            android:minHeight="0dp"
+            android:minWidth="0dp"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/freeBoardCommentContent"

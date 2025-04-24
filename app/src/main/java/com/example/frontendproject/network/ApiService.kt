@@ -90,4 +90,7 @@ interface ApiService {
 
     @DELETE("freeboard/{id}/{boardid}")
     fun deleteFreeBoard(@Path("id") memberId: Long, @Path("boardid") boardId: Long): Call<String>
+
+    @DELETE("freeboard/comment/{id}/{commentid}")
+    fun deleteFreeBoardCommnet(@Path("id") memberId: Long, @Path("commentid") commentId: Long): Call<String>
 }

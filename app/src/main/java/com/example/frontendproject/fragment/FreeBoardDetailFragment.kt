@@ -138,7 +138,7 @@ class FreeBoardDetailFragment : Fragment() {
         val commentRecyclerView = view.findViewById<RecyclerView>(R.id.freeBoardCommentRecyclerView)
         val writerNameTextView = view.findViewById<TextView>(R.id.freeBoardDetailWriter)
 
-        val commentAdapter = CommentAdapter(emptyList()) { }
+        val commentAdapter = CommentAdapter(emptyList(), memberId)
         commentRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         commentRecyclerView.adapter = commentAdapter
 
@@ -176,6 +176,8 @@ class FreeBoardDetailFragment : Fragment() {
                 else -> false
             }
         }
+
+
     }
 
     private fun freeBoardDelete(memberId: Long, freeBoardId: Long) {
