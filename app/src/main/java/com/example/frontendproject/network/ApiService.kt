@@ -81,4 +81,10 @@ interface ApiService {
 
     @GET("freeboard/{id}/{boardid}")
     fun getFreeboard(@Path("id") memberId: Long, @Path("boardid") boardId: Long): Call<FreeBoardResponse>
+
+    @GET("freeboard/edit/{id}/{boardid}")
+    fun getEditFreeBoard(@Path("id") memberId: Long, @Path("boardid") boardId: Long): Call<FreeBoardAddRequest>
+
+    @POST("freeboard/edit/{id}/{boardid}")
+    fun editFreeBoard(@Path("id") memberId: Long, @Path("boardid") boardId: Long, @Body freeBoardAddRequest : FreeBoardAddRequest): Call<String>
 }

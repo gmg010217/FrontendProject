@@ -37,12 +37,13 @@ class FreeBoardDetailFragment : Fragment() {
 
         val memberId = requireContext().getSharedPreferences("user_prefs", MODE_PRIVATE).getLong("memberId", -1)
         val freeBoardId = arguments?.getLong("freeBoardId") ?: -1L
+        val editMode = arguments?.getBoolean("isEditMode") ?: false
 
         lateinit var view: View
 
-        if (freeBoardId == -1L) {
+        if (freeBoardId == -1L || editMode) {
             view = inflater.inflate(R.layout.fragment_free_board_add, container, false)
-            freeBoardAdd(view, memberId)
+            freeBoardAdd(view, memberId, freeBoardId)
         } else {
             view = inflater.inflate(R.layout.fragment_free_board_detail, container, false)
             freeBoardDetail(view, memberId, freeBoardId)
@@ -51,31 +52,80 @@ class FreeBoardDetailFragment : Fragment() {
         return view
     }
 
-    private fun freeBoardAdd(view: View, memberId: Long) {
+    private fun freeBoardAdd(view: View, memberId: Long, freeBoardId: Long) {
         val saveBtn = view.findViewById<Button>(R.id.freeBoardAddSaveBtn)
 
-        saveBtn.setOnClickListener {
-            val title = view.findViewById<EditText>(R.id.freeBoardAddTitle).text.toString()
-            val content = view.findViewById<EditText>(R.id.freeBoardAddContent).text.toString()
-            val addFreeBoard = FreeBoardAddRequest(
-                title = title,
-                content = content
-            )
-
-            api.addFreeBoard(memberId, addFreeBoard).enqueue(object: Callback<String> {
-                override fun onResponse(call: Call<String>, response: Response<String>) {
+        if (freeBoardId != -1L) {
+            api.getEditFreeBoard(memberId, freeBoardId).enqueue(object: Callback<FreeBoardAddRequest> {
+                override fun onResponse(
+                    call: Call<FreeBoardAddRequest>,
+                    response: Response<FreeBoardAddRequest>
+                ) {
                     if (response.isSuccessful) {
-                        Toast.makeText(requireContext(), "게시글 작성 완료", Toast.LENGTH_SHORT).show()
-                        moveToMain()
-                    } else {
-                        Toast.makeText(requireContext(), "저장 실패", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "수정을 위한 게시글 조회 완료", Toast.LENGTH_SHORT).show()
+
+                        val data = response.body()
+                        val titleEditText = view.findViewById<EditText>(R.id.freeBoardAddTitle)
+                        val contentEditText = view.findViewById<EditText>(R.id.freeBoardAddContent)
+
+                        titleEditText.setText(data?.title ?: "")
+                        contentEditText.setText(data?.content ?: "")
+
+                        titleEditText.isEnabled = true
+                        contentEditText.isEnabled = true
                     }
                 }
 
-                override fun onFailure(call: Call<String>, t: Throwable) {
-                    Toast.makeText(requireContext(), "서버 오류", Toast.LENGTH_SHORT)
+                override fun onFailure(call: Call<FreeBoardAddRequest>, t: Throwable) {
+                    Toast.makeText(requireContext(), "서버 오류", Toast.LENGTH_SHORT).show()
                 }
             })
+        }
+
+        saveBtn.setOnClickListener {
+            if (freeBoardId == -1L) {
+                val title = view.findViewById<EditText>(R.id.freeBoardAddTitle).text.toString()
+                val content = view.findViewById<EditText>(R.id.freeBoardAddContent).text.toString()
+                val addFreeBoard = FreeBoardAddRequest(
+                    title = title,
+                    content = content
+                )
+
+                api.addFreeBoard(memberId, addFreeBoard).enqueue(object: Callback<String> {
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(requireContext(), "게시글 작성 완료", Toast.LENGTH_SHORT).show()
+                            moveToMain()
+                        } else {
+                            Toast.makeText(requireContext(), "저장 실패", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        Toast.makeText(requireContext(), "서버 오류", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            } else {
+                val title = view.findViewById<EditText>(R.id.freeBoardAddTitle).text.toString()
+                val content = view.findViewById<EditText>(R.id.freeBoardAddContent).text.toString()
+                val data = FreeBoardAddRequest(
+                    title = title,
+                    content = content
+                )
+
+                api.editFreeBoard(memberId, freeBoardId, data).enqueue(object: Callback<String> {
+                    override fun onResponse(call: Call<String>, response: Response<String>) {
+                        if (response.isSuccessful) {
+                            Toast.makeText(requireContext(), "수정이 완료 되었습니다", Toast.LENGTH_SHORT).show()
+                            moveToMain()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        Toast.makeText(requireContext(), "서버 오류", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            }
         }
     }
 
@@ -109,6 +159,32 @@ class FreeBoardDetailFragment : Fragment() {
                 Toast.makeText(requireContext(), "서버 오류", Toast.LENGTH_SHORT).show()
             }
         })
+
+        val toolbar = view.findViewById<androidx.appcompat.widget.Toolbar>(R.id.freeBoardDetailToolbar)
+        toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.freeBoardEdit -> {
+                    moveToEdit(memberId, freeBoardId)
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+
+    private fun moveToEdit(memberId: Long, freeBoardId: Long) {
+        val bundle = Bundle().apply {
+            putLong("freeBoardId", freeBoardId)
+            putBoolean("isEditMode", true)
+        }
+
+        val editFragment = FreeBoardDetailFragment() // 혹은 FreeBoardAddFragment()로 수정
+        editFragment.arguments = bundle
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.freeBoardFragmentContainer, editFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun moveToMain() {
