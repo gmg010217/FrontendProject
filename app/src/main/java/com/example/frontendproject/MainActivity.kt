@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, FreeBoardActivity::class.java))
         }
         binding.worryBoardBtn.setOnClickListener {
-            startActivity(Intent(this, WorryBoardActivity::class.java))
+            startActivity(Intent(this, CounselBoardActivity::class.java))
         }
         binding.rankingBoardBtn.setOnClickListener {
             startActivity(Intent(this, RankingBoardActivity::class.java))

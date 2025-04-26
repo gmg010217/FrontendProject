@@ -9,6 +9,7 @@ import com.example.frontendproject.model.MemberUpdate
 import com.example.frontendproject.model.Quote
 import com.example.frontendproject.model.SignUpRequest
 import com.example.frontendproject.model.counselboard.CounselBoardAddRequest
+import com.example.frontendproject.model.counselboard.CounselBoardCommentAddRequest
 import com.example.frontendproject.model.counselboard.CounselBoardResponse
 import com.example.frontendproject.model.counselboard.CounselboardsResponse
 import com.example.frontendproject.model.freeboard.FreeBoardAddRequest
@@ -117,7 +118,7 @@ interface ApiService {
     fun getEditCounselBoard(@Path("id") memberId: Long, @Path("boardid") boardId: Long): Call<CounselBoardAddRequest>
 
     @POST("counselboard/edit/{id}/{boardid}")
-    fun editCounselBoard(@Path("id") memberId: Long, @Path("boardid") boardId: Long, @Body freeBoardAddRequest : FreeBoardAddRequest): Call<String>
+    fun editCounselBoard(@Path("id") memberId: Long, @Path("boardid") boardId: Long, @Body counselBoardAddRequest : CounselBoardAddRequest): Call<String>
 
     @DELETE("counselboard/{id}/{boardid}")
     fun deleteCounselBoard(@Path("id") memberId: Long, @Path("boardid") boardId: Long): Call<String>
@@ -126,5 +127,5 @@ interface ApiService {
     fun deleteCounselBoardCommnet(@Path("id") memberId: Long, @Path("commentid") commentId: Long): Call<String>
 
     @POST("counselboard/comment/{id}/{boardid}")
-    fun addCounselBoardComment(@Path("id") memberId: Long, @Path("boardid") boardId: Long, @Body freeBoardCommentAddRequest: FreeBoardCommentAddRequest): Call<String>
+    fun addCounselBoardComment(@Path("id") memberId: Long, @Path("boardid") boardId: Long, @Body counselBoardCommentAddRequest: CounselBoardCommentAddRequest): Call<String>
 }

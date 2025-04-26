@@ -43,7 +43,7 @@
         <activity android:name=".FreeBoardActivity"
             android:exported="true" />
 
-        <activity android:name=".WorryBoardActivity"
+        <activity android:name=".CounselBoardActivity"
             android:exported="true" />
 
         <activity android:name=".RankingBoardActivity"
