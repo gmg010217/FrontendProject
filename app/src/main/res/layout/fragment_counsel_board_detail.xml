@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#c9d8b7"
+    android:fitsSystemWindows="true">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/counselBoardDetailToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:menu="@menu/menu_counsel_board_detail" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical|start"
+            android:paddingEnd="48dp">
+
+            <TextView
+                android:id="@+id/counselBoardDetailWriter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="작성자명"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#000000"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/counselBoardDetailTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="제목"
+                android:enabled="false"
+                android:background="@android:color/transparent"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#000000"/>
+
+            <EditText
+                android:id="@+id/counselBoardDetailContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="200dp"
+                android:gravity="top"
+                android:hint="내용"
+                android:enabled="false"
+                android:background="@android:color/transparent"
+                android:textSize="16sp"
+                android:paddingTop="8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/counselBoardCommentRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <EditText
+            android:id="@+id/counselBoardDetailCommentContent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="댓글을 입력하세요"
+            android:background="@drawable/comment_background"
+            android:padding="12dp"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/counselBoardDetailSaveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="등록"
+            android:layout_marginStart="8dp"
+            android:backgroundTint="#5c6e56" />
+    </LinearLayout>
+</LinearLayout>
