@@ -1,6 +1,6 @@
-package com.example.frontendproject.model
+package com.example.frontendproject.model.counselboard
 
-data class FreeBoardResponse(
+data class CounselBoardResponse(
     val writerName: String,
     val writerId: Long,
     val title: String,

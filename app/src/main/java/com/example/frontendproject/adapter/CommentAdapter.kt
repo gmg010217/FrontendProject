@@ -7,7 +7,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontendproject.MainActivity
 import com.example.frontendproject.databinding.ItemFreeBoardCommentBinding
-import com.example.frontendproject.model.CommentResponse
+import com.example.frontendproject.model.freeboard.CommentResponse
 import com.example.frontendproject.network.ApiService
 import com.example.frontendproject.network.RetrofitClient
 import retrofit2.Call

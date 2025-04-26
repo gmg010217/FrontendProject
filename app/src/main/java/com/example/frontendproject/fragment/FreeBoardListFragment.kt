@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontendproject.R
 import com.example.frontendproject.adapter.FreeBoardAdapter
-import com.example.frontendproject.model.FreeboardsResponse
+import com.example.frontendproject.model.freeboard.FreeboardsResponse
 import com.example.frontendproject.network.ApiService
 import com.example.frontendproject.network.RetrofitClient
 import retrofit2.Call

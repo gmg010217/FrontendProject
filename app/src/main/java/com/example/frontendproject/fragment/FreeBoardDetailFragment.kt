@@ -17,9 +17,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.frontendproject.MainActivity
 import com.example.frontendproject.R
 import com.example.frontendproject.adapter.CommentAdapter
-import com.example.frontendproject.model.FreeBoardAddRequest
-import com.example.frontendproject.model.FreeBoardCommentAddRequest
-import com.example.frontendproject.model.FreeBoardResponse
+import com.example.frontendproject.model.freeboard.FreeBoardAddRequest
+import com.example.frontendproject.model.freeboard.FreeBoardCommentAddRequest
+import com.example.frontendproject.model.freeboard.FreeBoardResponse
 import com.example.frontendproject.network.ApiService
 import com.example.frontendproject.network.RetrofitClient
 import retrofit2.Call

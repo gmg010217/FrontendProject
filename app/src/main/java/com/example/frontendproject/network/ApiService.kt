@@ -2,16 +2,19 @@ package com.example.frontendproject.network
 
 import com.example.frontendproject.model.Diary
 import com.example.frontendproject.model.Exercise
-import com.example.frontendproject.model.FreeBoardAddRequest
-import com.example.frontendproject.model.FreeBoardCommentAddRequest
-import com.example.frontendproject.model.FreeBoardResponse
-import com.example.frontendproject.model.FreeboardsResponse
 import com.example.frontendproject.model.LoginRequest
 import com.example.frontendproject.model.LoginResponse
 import com.example.frontendproject.model.MemberInfoResponse
 import com.example.frontendproject.model.MemberUpdate
 import com.example.frontendproject.model.Quote
 import com.example.frontendproject.model.SignUpRequest
+import com.example.frontendproject.model.counselboard.CounselBoardAddRequest
+import com.example.frontendproject.model.counselboard.CounselBoardResponse
+import com.example.frontendproject.model.counselboard.CounselboardsResponse
+import com.example.frontendproject.model.freeboard.FreeBoardAddRequest
+import com.example.frontendproject.model.freeboard.FreeBoardCommentAddRequest
+import com.example.frontendproject.model.freeboard.FreeBoardResponse
+import com.example.frontendproject.model.freeboard.FreeboardsResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -97,4 +100,31 @@ interface ApiService {
 
     @POST("freeboard/comment/{id}/{boardid}")
     fun addFreeBoardComment(@Path("id") memberId: Long, @Path("boardid") boardId: Long, @Body freeBoardCommentAddRequest: FreeBoardCommentAddRequest): Call<String>
+
+    @GET("counselboard/")
+    fun getCounselBoardList() : Call<List<CounselboardsResponse>>
+
+    @POST("counselboard/{id}")
+    fun addCounselBoard(@Path("id") memberId: Long, @Body counselBoardAddRequest: CounselBoardAddRequest): Call<String>
+
+    @GET("counselboard/search")
+    fun searchCounselBoardList(@Query("title") title: String): Call<List<CounselboardsResponse>>
+
+    @GET("counselboard/{id}/{boardid}")
+    fun getCounselboard(@Path("id") memberId: Long, @Path("boardid") boardId: Long): Call<CounselBoardResponse>
+
+    @GET("counselboard/edit/{id}/{boardid}")
+    fun getEditCounselBoard(@Path("id") memberId: Long, @Path("boardid") boardId: Long): Call<CounselBoardAddRequest>
+
+    @POST("counselboard/edit/{id}/{boardid}")
+    fun editCounselBoard(@Path("id") memberId: Long, @Path("boardid") boardId: Long, @Body freeBoardAddRequest : FreeBoardAddRequest): Call<String>
+
+    @DELETE("counselboard/{id}/{boardid}")
+    fun deleteCounselBoard(@Path("id") memberId: Long, @Path("boardid") boardId: Long): Call<String>
+
+    @DELETE("counselboard/comment/{id}/{commentid}")
+    fun deleteCounselBoardCommnet(@Path("id") memberId: Long, @Path("commentid") commentId: Long): Call<String>
+
+    @POST("counselboard/comment/{id}/{boardid}")
+    fun addCounselBoardComment(@Path("id") memberId: Long, @Path("boardid") boardId: Long, @Body freeBoardCommentAddRequest: FreeBoardCommentAddRequest): Call<String>
 }

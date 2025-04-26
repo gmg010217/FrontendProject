@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.frontendproject.databinding.ItemFreeBoardBinding
-import com.example.frontendproject.model.FreeboardsResponse
+import com.example.frontendproject.model.freeboard.FreeboardsResponse
 
 
 class FreeBoardViewHolder(val binding: ItemFreeBoardBinding) : RecyclerView.ViewHolder(binding.root)

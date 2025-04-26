@@ -1,4 +1,4 @@
-package com.example.frontendproject.model
+package com.example.frontendproject.model.freeboard
 
 data class CommentResponse (
     val id: Long,
