@@ -1,5 +1,7 @@
 package com.example.frontendproject.network
 
+import com.example.frontendproject.model.AiChatRequest
+import com.example.frontendproject.model.AiChatResponse
 import com.example.frontendproject.model.Diary
 import com.example.frontendproject.model.Exercise
 import com.example.frontendproject.model.LoginRequest
@@ -128,4 +130,10 @@ interface ApiService {
 
     @POST("counselboard/comment/{id}/{boardid}")
     fun addCounselBoardComment(@Path("id") memberId: Long, @Path("boardid") boardId: Long, @Body counselBoardCommentAddRequest: CounselBoardCommentAddRequest): Call<String>
+
+    @GET("aichat/{id}")
+    fun getAiChat(@Path("id") memberId: Long): Call<List<AiChatResponse>>
+
+    @POST("aichat/{id}")
+    fun addAiChat(@Path("id") memberId: Long, @Body message : AiChatRequest): Call<String>
 }

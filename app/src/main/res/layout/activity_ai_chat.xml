@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#c9d8b7">
+    android:background="#c9d8b7"
+    android:fitsSystemWindows="true">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AI에게 건강 정보를 물어보거나 상담을 받으세요!"
+        android:text="AI 건강정보/고민상담"
         android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
@@ -22,6 +23,7 @@
         android:layout_marginVertical="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -36,6 +38,7 @@
         android:background="#eeeeee">
 
         <EditText
+            android:id="@+id/chatContentEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -44,6 +47,7 @@
             android:padding="10dp" />
 
         <Button
+            android:id="@+id/chatSubmitBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="전송"
