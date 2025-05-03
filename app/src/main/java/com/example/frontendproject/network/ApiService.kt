@@ -65,8 +65,8 @@ interface ApiService {
     @DELETE("member/{id}")
     fun deleteMember(@Path("id") id: Long): Call<String>
 
-    @GET("exercise/{dayid}")
-    fun getQuote(@Path("dayid") id: Long): Call<Quote>
+    @GET("exercise/main/{id}/{dayid}")
+    fun getQuoteAndRecommand(@Path("id") memberId: Long, @Path("dayid") id: Long): Call<Quote>
 
     @GET("exercise/{id}/{date}")
     fun getExercise(@Path("id") memberId: Long, @Path("date") date: String): Call<Exercise>
