@@ -71,5 +71,16 @@
         android:layout_height="wrap_content"
         android:text="운동 조회/기록하기"
         android:textSize="18sp"
-        android:backgroundTint="#5c6e56" />
+        android:backgroundTint="#5c6e56" />\
+
+
+    <TextView
+        android:id="@+id/exerciseRecommand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="운동 루틴 추천 : 하루에 한번씩 7km 러닝을 추천합니다."
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="20dp"/>
 </LinearLayout>

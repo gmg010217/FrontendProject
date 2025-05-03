@@ -74,8 +74,8 @@ interface ApiService {
     @POST("exercise/{id}")
     fun addExercise(@Path("id") memberId: Long, @Body exercise: Exercise): Call<String>
 
-    @POST("exericse/{id}/{date}")
-    fun editExercises(@Path("id") memberId: Long, @Path("date") date: String, @Body exercise: Exercise): Call<String>
+    @POST("exercise/{id}/{date}")
+    fun editExercises(@Path("id") memberId: Long, @Path("date") date: String?, @Body exercise: Exercise): Call<String>
 
     @GET("freeboard/")
     fun getFreeBoardList() : Call<List<FreeboardsResponse>>

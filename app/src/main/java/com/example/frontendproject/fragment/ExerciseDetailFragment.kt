@@ -40,7 +40,7 @@ class ExerciseDetailFragment : Fragment() {
         val api = RetrofitClient.retrofit.create(ApiService::class.java)
         val memberId = requireContext().getSharedPreferences("user_prefs", MODE_PRIVATE).getLong("memberId", -1)
 
-        var isNew = false
+        var isNew = true
 
         selectedDate?.let { date ->
             api.getExercise(memberId, selectedDate).enqueue(object: Callback<Exercise> {
@@ -50,9 +50,9 @@ class ExerciseDetailFragment : Fragment() {
                         exercise?.let {
                             titleEditText.setText(it.title)
                             contentEditText.setText(it.content)
+                            isNew = false
                         }
                     } else {
-                        isNew = true
                         Toast.makeText(requireContext(), "운동 데이터를 입력해주세요!", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -92,7 +92,7 @@ class ExerciseDetailFragment : Fragment() {
                     content = contentEditText.text.toString()
                 )
 
-                api.addExercise(memberId, editExercise).enqueue(object : Callback<String> {
+                api.editExercises(memberId, selectedDate, editExercise).enqueue(object : Callback<String> {
                     override fun onResponse(call: Call<String>, response: Response<String>) {
                         Toast.makeText(requireContext(), "운동 기록 수정 완료", Toast.LENGTH_SHORT).show()
                         moveToMain()
