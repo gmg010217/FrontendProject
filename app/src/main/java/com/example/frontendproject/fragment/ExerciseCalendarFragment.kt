@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity.MODE_PRIVATE
 import androidx.fragment.app.Fragment
 import com.example.frontendproject.R
+import com.example.frontendproject.model.ExerciseCountResponse
 import com.example.frontendproject.model.Quote
 import com.example.frontendproject.network.ApiService
 import com.example.frontendproject.network.RetrofitClient
@@ -36,6 +37,7 @@ class ExerciseCalendarFragment : Fragment() {
         val exerciseRecommand = view.findViewById<TextView>(R.id.exerciseRecommand)
         val calendarView = view.findViewById<CalendarView>(R.id.exerciseCalendarView)
         val moveBtn = view.findViewById<Button>(R.id.moveExerciseDetailBtn)
+        var count : Long = 0
 
         var selectedDate: LocalDate = LocalDate.now()
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
@@ -62,18 +64,32 @@ class ExerciseCalendarFragment : Fragment() {
         })
 
         moveBtn.setOnClickListener {
-            val bundle = Bundle().apply {
-                putString("selectedDate", selectedDate.toString())
-            }
+            api.isFirstExercise(memberId).enqueue(object : Callback<ExerciseCountResponse> {
+                override fun onResponse(call: Call<ExerciseCountResponse>, response: Response<ExerciseCountResponse>) {
+                    if (response.isSuccessful) {
+                        val eCount = response.body()
+                        val latestCount = eCount?.count ?: 0
 
-            val fragment = ExerciseDetailFragment().apply {
-                arguments = bundle
-            }
+                        val bundle = Bundle().apply {
+                            putString("selectedDate", selectedDate.toString())
+                            putLong("count", latestCount)
+                        }
 
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.exerciseFragmentContainer, fragment)
-                .addToBackStack(null)
-                .commit()
+                        val fragment = ExerciseDetailFragment().apply {
+                            arguments = bundle
+                        }
+
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.exerciseFragmentContainer, fragment)
+                            .addToBackStack(null)
+                            .commit()
+                    }
+                }
+
+                override fun onFailure(call: Call<ExerciseCountResponse>, t: Throwable) {
+                    Toast.makeText(requireContext(), "서버 연결 실패", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
 
         return view

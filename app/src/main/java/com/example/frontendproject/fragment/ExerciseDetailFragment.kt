@@ -2,6 +2,7 @@ package com.example.frontendproject.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,7 +29,7 @@ class ExerciseDetailFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_exercise_detail, container, false)
 
-        val selectedDate = arguments?.getString("selectedDate")
+        val selectedDate = arguments?.getString("selectedDate").toString()
 
         val dayTextView = view.findViewById<TextView>(R.id.exerciseDetailDayTextView)
         dayTextView.text = selectedDate
@@ -40,20 +41,39 @@ class ExerciseDetailFragment : Fragment() {
         val api = RetrofitClient.retrofit.create(ApiService::class.java)
         val memberId = requireContext().getSharedPreferences("user_prefs", MODE_PRIVATE).getLong("memberId", -1)
 
-        var isNew = true
+        var count = arguments?.getLong("count")
+
 
         selectedDate?.let { date ->
             api.getExercise(memberId, selectedDate).enqueue(object: Callback<Exercise> {
                 override fun onResponse(call: Call<Exercise>, response: Response<Exercise>) {
-                    if (response.isSuccessful) {
-                        val exercise = response.body()
+                    val exercise = response.body()
+                    if (response.isSuccessful && count != 0L && !exercise?.title.isNullOrEmpty() && !exercise?.content.isNullOrEmpty()) {
                         exercise?.let {
                             titleEditText.setText(it.title)
                             contentEditText.setText(it.content)
-                            isNew = false
+                            setSaveButton(api, memberId, date, titleEditText, contentEditText, selectedDate, false)
                         }
+                    } else if (response.isSuccessful && count == 0L) {
+                        setSaveButton(api, memberId, date, titleEditText, contentEditText, selectedDate, true)
                     } else {
-                        Toast.makeText(requireContext(), "운동 데이터를 입력해주세요!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "AI가 운동 기록을 자동으로 작성중입니다.", Toast.LENGTH_SHORT).show()
+                        api.getFirstExercise(memberId, selectedDate).enqueue(object: Callback<Exercise> {
+                            override fun onResponse(call: Call<Exercise>, response: Response<Exercise>) {
+                                if (response.isSuccessful) {
+                                    val aiExercise = response.body()
+                                    aiExercise?.let {
+                                        titleEditText.setText(it.title)
+                                        contentEditText.setText(it.content)
+                                        setSaveButton(api, memberId, date, titleEditText, contentEditText, selectedDate, false)
+                                    }
+                                }
+                            }
+
+                            override fun onFailure(call: Call<Exercise>, t: Throwable) {
+                                Toast.makeText(requireContext(), "서버 오류 발생", Toast.LENGTH_SHORT).show()
+                            }
+                        })
                     }
                 }
 
@@ -63,12 +83,25 @@ class ExerciseDetailFragment : Fragment() {
             })
         }
 
-        saveBtn.setOnClickListener {
-            if (isNew) {
+        return view
+    }
+
+    private fun setSaveButton(
+        api: ApiService,
+        memberId: Long,
+        date: String,
+        titleEditText: EditText?,
+        contentEditText: EditText?,
+        selectedDate: String?,
+        realNew: Boolean
+    ) {
+        val saveBtn = view?.findViewById<Button>(R.id.exerciseDetailSaveButton)
+        saveBtn?.setOnClickListener {
+            if (realNew) {
                 val addExercise = Exercise (
                     exerciseDate = selectedDate,
-                    title = titleEditText.text.toString(),
-                    content = contentEditText.text.toString()
+                    title = titleEditText?.text.toString(),
+                    content = contentEditText?.text.toString()
                 )
 
                 api.addExercise(memberId, addExercise).enqueue(object : Callback<String> {
@@ -88,8 +121,8 @@ class ExerciseDetailFragment : Fragment() {
             } else {
                 val editExercise = Exercise (
                     exerciseDate = selectedDate,
-                    title = titleEditText.text.toString(),
-                    content = contentEditText.text.toString()
+                    title = titleEditText?.text.toString(),
+                    content = contentEditText?.text.toString()
                 )
 
                 api.editExercises(memberId, selectedDate, editExercise).enqueue(object : Callback<String> {
@@ -104,8 +137,6 @@ class ExerciseDetailFragment : Fragment() {
                 })
             }
         }
-
-        return view
     }
 
     private fun moveToMain() {

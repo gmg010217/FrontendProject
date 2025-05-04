@@ -4,6 +4,7 @@ import com.example.frontendproject.model.AiChatRequest
 import com.example.frontendproject.model.AiChatResponse
 import com.example.frontendproject.model.Diary
 import com.example.frontendproject.model.Exercise
+import com.example.frontendproject.model.ExerciseCountResponse
 import com.example.frontendproject.model.LoginRequest
 import com.example.frontendproject.model.LoginResponse
 import com.example.frontendproject.model.MemberInfoResponse
@@ -70,6 +71,12 @@ interface ApiService {
 
     @GET("exercise/{id}/{date}")
     fun getExercise(@Path("id") memberId: Long, @Path("date") date: String): Call<Exercise>
+
+    @GET("exercise/first/{id}/{date}")
+    fun getFirstExercise(@Path("id") memberId: Long, @Path("date") date: String?): Call<Exercise>
+
+    @GET("exercise/first/{id}")
+    fun isFirstExercise(@Path("id") memberId: Long): Call<ExerciseCountResponse>
 
     @POST("exercise/{id}")
     fun addExercise(@Path("id") memberId: Long, @Body exercise: Exercise): Call<String>
