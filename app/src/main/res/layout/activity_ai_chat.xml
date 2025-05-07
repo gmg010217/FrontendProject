@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="AI 건강정보/고민상담"
+        android:text="AI 고민상담"
         android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"

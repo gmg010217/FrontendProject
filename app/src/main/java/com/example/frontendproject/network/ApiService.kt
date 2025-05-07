@@ -9,6 +9,8 @@ import com.example.frontendproject.model.LoginRequest
 import com.example.frontendproject.model.LoginResponse
 import com.example.frontendproject.model.MemberInfoResponse
 import com.example.frontendproject.model.MemberUpdate
+import com.example.frontendproject.model.Quiz
+import com.example.frontendproject.model.QuizDto
 import com.example.frontendproject.model.Quote
 import com.example.frontendproject.model.SignUpRequest
 import com.example.frontendproject.model.counselboard.CounselBoardAddRequest
@@ -143,4 +145,10 @@ interface ApiService {
 
     @POST("aichat/{id}")
     fun addAiChat(@Path("id") memberId: Long, @Body message : AiChatRequest): Call<String>
+
+    @GET("quiz/{id}")
+    fun getQuiz(@Path("id") memberId: Long): Call<List<QuizDto>>
+
+    @POST("quiz/save/{id}")
+    fun saveQuiz(@Path("id") memberId: Long, @Body quiz: Quiz): Call<String>
 }

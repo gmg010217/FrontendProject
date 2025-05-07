@@ -54,6 +54,15 @@
 
         <activity android:name=".DiaryActivity"
             android:exported="true" />
+
+        <activity android:name=".QuizStartActivity"
+            android:exported="true" />
+
+        <activity android:name=".QuizActivity"
+            android:exported="true" />
+
+        <activity android:name=".QuizResultActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

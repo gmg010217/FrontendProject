@@ -44,6 +44,9 @@ class MainActivity : AppCompatActivity() {
             fetchUserInfo(memberId)
         }
 
+        binding.mainQuiz.setOnClickListener {
+            startActivity(Intent(this, QuizStartActivity::class.java))
+        }
         binding.exerciseCalendarBtn.setOnClickListener {
             startActivity(Intent(this, ExerciseCalendarActivity::class.java))
         }
