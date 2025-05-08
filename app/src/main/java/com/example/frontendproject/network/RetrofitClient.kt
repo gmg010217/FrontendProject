@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "http://192.168.45.244:8080/healthmind/"
+    private const val BASE_URL = "http://192.168.45.236:8080/healthmind/"
 
     private val client = OkHttpClient.Builder()
         .cookieJar(AppCookieJar)

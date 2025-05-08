@@ -12,6 +12,7 @@ import com.example.frontendproject.model.MemberUpdate
 import com.example.frontendproject.model.Quiz
 import com.example.frontendproject.model.QuizDto
 import com.example.frontendproject.model.Quote
+import com.example.frontendproject.model.RankingItem
 import com.example.frontendproject.model.SignUpRequest
 import com.example.frontendproject.model.counselboard.CounselBoardAddRequest
 import com.example.frontendproject.model.counselboard.CounselBoardCommentAddRequest
@@ -151,4 +152,7 @@ interface ApiService {
 
     @POST("quiz/save/{id}")
     fun saveQuiz(@Path("id") memberId: Long, @Body quiz: Quiz): Call<String>
+
+    @GET("rank/{id}")
+    fun getRank(@Path("id") memberId: Long): Call<List<RankingItem>>
 }

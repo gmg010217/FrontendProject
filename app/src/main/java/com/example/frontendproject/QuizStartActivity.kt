@@ -37,7 +37,10 @@ class QuizStartActivity : AppCompatActivity() {
                         intent.putExtra("score", 0)
                         startActivity(intent)
                     } else {
-                        Toast.makeText(this@QuizStartActivity, "퀴즈를 불러오는 중 오류 발생", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@QuizStartActivity, "오늘 이미 퀴즈를 푸셨습니다", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@QuizStartActivity, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                        startActivity(intent)
                     }
                 }
 
